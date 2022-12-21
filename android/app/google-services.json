@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "582003499202",
+    "project_id": "tirynski-d9a08",
+    "storage_bucket": "tirynski-d9a08.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:582003499202:android:01d5e6e09a2b5fee3edb5b",
+        "android_client_info": {
+          "package_name": "com.example.image_slider_webview"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "582003499202-v898bd6nfbba3ohhnbggi98akk25pchn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSV7O3Mn9bjGlBuAh_B9mTLwqNwQT2oEA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "582003499202-v898bd6nfbba3ohhnbggi98akk25pchn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "582003499202-5lrf8l8arbsrt1047o29ap0hjeh8v0aq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tirynsik"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:582003499202:android:9409304b280217823edb5b",
+        "android_client_info": {
+          "package_name": "com.example.trynsiki_admin_panel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "582003499202-v898bd6nfbba3ohhnbggi98akk25pchn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSV7O3Mn9bjGlBuAh_B9mTLwqNwQT2oEA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "582003499202-v898bd6nfbba3ohhnbggi98akk25pchn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "582003499202-5lrf8l8arbsrt1047o29ap0hjeh8v0aq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tirynsik"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
