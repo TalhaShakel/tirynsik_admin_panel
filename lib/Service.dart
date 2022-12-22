@@ -1,13 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 // import 'package:image_picker/image_picker.dart';
 
 var fAuth = FirebaseAuth.instance;
+var fStorage = FirebaseStorage.instance;
 firestore_set(collection, doc, set) async {
   doc != null
       ? await FirebaseFirestore.instance
@@ -46,12 +49,20 @@ firestore_Sec_set(collection, secCollection, doc, doc2, data,
             .set(data);
 }
 
-firestore_update(collection, doc, data) {
-  var dat = FirebaseFirestore.instance
-      .collection("$collection")
-      .doc("$doc")
-      .update(data);
-  return dat;
+firestore_update(collection, doc, data) async {
+  try {
+    EasyLoading.show();
+    var dat = await FirebaseFirestore.instance
+        .collection("$collection")
+        .doc("$doc")
+        .update(data);
+    Get.snackbar("Data is added succesfully", "");
+    EasyLoading.dismiss();
+    return dat;
+  } on FirebaseException catch (e) {
+    EasyLoading.dismiss();
+    Get.snackbar("${e.message}", "");
+  }
 }
 
 addfav(List like, uid, collection, doc) async {
@@ -79,13 +90,12 @@ pickImage(
   XFile? _file = await _imagePicker.pickImage(
       source: source, imageQuality: 50, maxHeight: 600, maxWidth: 900);
   if (_file != null) {
-    // name =   _file.name;
+    print(_file.name);
+
     return await _file.readAsBytes();
   }
   print('No Image Selected');
 }
-
-
 
 // pickImage(
 //   ImageSource source,
