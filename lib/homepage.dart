@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -55,19 +54,20 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 30.h),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        height: 15.h,
-                      ),
+                      // SizedBox(
+                      //   height: 15.h,
+                      // ),
                       paneldata(),
-                      paneldata(),
-                      paneldata(),
-                      paneldata(),
-                      paneldata(),
-                      paneldata(),
-                      paneldata(),
-                      paneldata(),
-                      paneldata(),
+                      // paneldata(),
+                      // paneldata(),
+                      // paneldata(),
+                      // paneldata(),
+                      // paneldata(),
+                      // paneldata(),
+                      // paneldata(),
+                      // paneldata(),
                     ],
                   ),
                 ),
@@ -166,8 +166,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                             if (img != null) {
                               // downloadurl.add(await uploadImageToStorage(img));
-                           imageL  = await uploadImageToStorage(img);
-
+                              imageL = await uploadImageToStorage(img);
                             }
                           },
                           child: Container(
@@ -219,8 +218,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
                             if (img != null) {
                               // downloadurl.add(await uploadImageToStorage(img));
-                           imageP  = await uploadImageToStorage(img);
-                              
+                              imageP = await uploadImageToStorage(img);
+
                               // print(downloadurl);
                             }
                           },
@@ -273,8 +272,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                             if (img != null) {
                               // downloadurl.add(await uploadImageToStorage(img));
-                           imageW  = await uploadImageToStorage(img);
-                              
+                              imageW = await uploadImageToStorage(img);
                             }
                           },
                           child: Container(
@@ -364,40 +362,47 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Row paneldata() {
-    return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Icon(Icons.delete),
-      SizedBox(
-        width: 3.w,
+  paneldata() {
+    return FittedBox(
+      child: Padding(
+        padding: EdgeInsets.only(top: 3.0),
+        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Icon(Icons.delete),
+          SizedBox(
+            width: 3.w,
+          ),
+          FlutterSwitch(
+            value: status,
+            width: 40.0,
+            height: 20.0,
+            padding: 0,
+            toggleColor: Colors.white,
+            // inactiveColor: Colors.green,
+            activeColor: Colors.green,
+            // valueFontSize: 25.0,
+            // toggleSize: 45.0,
+            // borderRadius: 30.0,
+            // padding: 8.0,
+            // showOnOff: true,
+            onToggle: (val) {
+              setState(() {
+                status = val;
+              });
+            },
+          ),
+          SizedBox(
+            width: 3.w,
+          ),
+          Text(
+            "Q00001 - Helena -dieet",
+            style: TextStyle(
+                fontSize: 11.sp,
+                color: Colors.black,
+                fontWeight: FontWeight.w600),
+          )
+        ]),
       ),
-      FlutterSwitch(
-        value: status,
-        width: 40.0,
-        height: 20.0,
-        padding: 0,
-        toggleColor: Colors.white,
-        // inactiveColor: Colors.green,
-        activeColor: Colors.green,
-        // valueFontSize: 25.0,
-        // toggleSize: 45.0,
-        // borderRadius: 30.0,
-        // padding: 8.0,
-        // showOnOff: true,
-        onToggle: (val) {
-          setState(() {
-            status = val;
-          });
-        },
-      ),
-      SizedBox(
-        width: 3.w,
-      ),
-      Text(
-        "Q00001 - Helena -dieet",
-        style: TextStyle(
-            fontSize: 11.sp, color: Colors.black, fontWeight: FontWeight.w600),
-      )
-    ]);
+    );
   }
 
   // Row uplaodimage(nameOfImage, VoidCallback) {
