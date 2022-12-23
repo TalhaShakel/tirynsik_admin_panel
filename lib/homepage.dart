@@ -53,23 +53,27 @@ class _MyHomePageState extends State<MyHomePage> {
                 decoration: BoxDecoration(border: Border.all()),
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 30.h),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // SizedBox(
-                      //   height: 15.h,
-                      // ),
-                      paneldata(),
-                      // paneldata(),
-                      // paneldata(),
-                      // paneldata(),
-                      // paneldata(),
-                      // paneldata(),
-                      // paneldata(),
-                      // paneldata(),
-                      // paneldata(),
-                    ],
-                  ),
+                  child: StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection('admin')
+                          .doc("repfHlxtX1DJBZQXs1DF")
+                          .snapshots(),
+                      builder:
+                          (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                        if (snapshot.hasData) {
+                          Map<String, dynamic> data =
+                              snapshot.data!.data() as Map<String, dynamic>;
+                          List imagedata = data["imageData"];
+                          print(imagedata);
+                          return ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: imagedata.length,
+                              itemBuilder: (context, index) {
+                                return paneldata();
+                              });
+                        }
+                        return Container();
+                      }),
                 ),
               ),
             ),
