@@ -12,14 +12,21 @@ import 'package:image_picker/image_picker.dart';
 var fAuth = FirebaseAuth.instance;
 var fStorage = FirebaseStorage.instance;
 firestore_set(collection, doc, set) async {
-  doc != null
-      ? await FirebaseFirestore.instance
-          .collection(collection.toString())
-          .doc(doc.toString())
-          .set(set)
-      : await FirebaseFirestore.instance
-          .collection(collection.toString())
-          .add(set);
+  try {
+    EasyLoading.show();
+    doc != null
+        ? await FirebaseFirestore.instance
+            .collection(collection.toString())
+            .doc(doc.toString())
+            .set(set, SetOptions(merge: true))
+        : await FirebaseFirestore.instance
+            .collection(collection.toString())
+            .add(set);
+    EasyLoading.dismiss();
+  } on FirebaseException catch (e) {
+    EasyLoading.dismiss();
+    Get.snackbar("${e.message}", "");
+  }
 }
 
 firestore_Sec_set(collection, secCollection, doc, doc2, data,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:trynsiki_admin_panel/Controllers/controllerbinding.dart';
 import 'package:trynsiki_admin_panel/firebase_options.dart';
 import 'package:trynsiki_admin_panel/homepage.dart';
 
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         builder: (context, child) {
           return GetMaterialApp(
+            // initialBinding: ControllerBindings(),
             builder: EasyLoading.init(),
             home: MyHomePage(),
             debugShowCheckedModeBanner: false,
@@ -31,7 +33,3 @@ class MyApp extends StatelessWidget {
         });
   }
 }
-
-
-
-
