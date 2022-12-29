@@ -1,6 +1,6 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -20,7 +20,7 @@ uploadImageToStorage(PickedFile? pickedFile1) async {
 
       await _reference
           .putData(
-        await pickedFile1!.readAsBytes(),
+        await pickedFile1.readAsBytes(),
         SettableMetadata(contentType: 'image/jpeg'),
       )
           .whenComplete(() async {

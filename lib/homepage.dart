@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart';
@@ -44,11 +45,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                fit: BoxFit.cover,
-                image: NetworkImage(
-                    "https://static.vecteezy.com/system/resources/thumbnails/008/079/335/small/empty-showcase-abstract-pastel-color-background-3d-illustration-free-vector.jpg"))),
+        // decoration: BoxDecoration(
+        //     image: DecorationImage(
+        //         fit: BoxFit.cover,
+        //         image: NetworkImage(
+        //             "https://static.vecteezy.com/system/resources/thumbnails/008/079/335/small/empty-showcase-abstract-pastel-color-background-3d-illustration-free-vector.jpg"))),
         child: GetBuilder<maincontroller>(builder: (controller) {
           return Padding(
             padding: EdgeInsets.symmetric(vertical: 0.w, horizontal: 0.h),
@@ -89,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                       var data = snapshot.data?.docs[index];
                                       // Map singleImageData = imagedata[index];
                                       print(data!.id);
-                                      return paneldata(data);
+                                      return paneldata(data, index);
                                     });
                               }
                             }
@@ -123,9 +124,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             decoration: BoxDecoration(border: Border.all()),
                             child: TextFormField(
                               controller: controller.title,
-                              onChanged: (value) {
-                                controller.onchanged(value, controller.title);
-                              },
+                              // onChanged: (value) {
+                              //   controller.onchanged(value, controller.title);
+                              // },
                               decoration: InputDecoration(
                                 contentPadding:
                                     EdgeInsets.only(bottom: 15, left: 10),
@@ -338,9 +339,9 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           ElevatedButton(
                               onPressed: () {
-                                if (imageL == null &&
-                                    imageP == null &&
-                                    imageW == null &&
+                                if (imageL == "" &&
+                                    imageP == "" &&
+                                    imageW == "" &&
                                     _nameofsourcecontroller.text
                                             .trim()
                                             .toString() ==
@@ -407,64 +408,83 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  paneldata(_) {
+  paneldata(_, index) {
     status = _["isShow"];
-    return FittedBox(
-      child: Padding(
-        padding: EdgeInsets.only(top: 3.0),
-        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Icon(Icons.delete),
-          SizedBox(
-            width: 3.w,
-          ),
-          FlutterSwitch(
-            value: status,
-            width: 40.0,
-            height: 20.0,
-            padding: 0,
-            toggleColor: Colors.white,
-            // inactiveColor: Colors.green,
-            activeColor: Colors.green,
-            // valueFontSize: 25.0,
-            // toggleSize: 45.0,
-            // borderRadius: 30.0,
-            // padding: 8.0,
-            // showOnOff: true,
-            onToggle: (val) async {
-              setState(() {
-                // firestore_update("admin", "repfHlxtX1DJBZQXs1DF", {
-                //   "imageData": FieldValue.arrayUnion([
-                //     {"imageData.0.isShow": val}
-                //   ])
-                // });
-                status = val;
-                print(_);
-                // status = val;
-                // _.update("isShow", (value) {
-                //   value = val;
-                //   return value;
-                // });
+    return Padding(
+      padding: EdgeInsets.only(top: 3.0),
+      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        GestureDetector(
+          onTap: () async {
+            try {
+              EasyLoading.show();
+              await FirebaseFirestore.instance
+                  .collection("admin")
+                  .doc(_.id)
+                  .delete();
 
-                firestore_update("admin", "${_.id}", {"isShow": val});
-                // firestore_set("admin", "repfHlxtX1DJBZQXs1DF", {
-                //   "imageData": {"isShow": false}
-                // });
-              });
+              EasyLoading.dismiss();
+            } on FirebaseException catch (e) {
+              EasyLoading.dismiss();
+
+              Get.snackbar("${e.message}", "");
+            }
+          },
+          child: Icon(
+            Icons.delete,
+          ),
+        ),
+        SizedBox(
+          width: 3.w,
+        ),
+        FlutterSwitch(
+          value: status,
+          width: 40.0,
+          height: 20.0,
+          padding: 0,
+          toggleColor: Colors.white,
+          // inactiveColor: Colors.green,
+          activeColor: Colors.green,
+          // valueFontSize: 25.0,
+          // toggleSize: 45.0,
+          // borderRadius: 30.0,
+          // padding: 8.0,
+          // showOnOff: true,
+          onToggle: (val) async {
+            setState(() {
+              // firestore_update("admin", "repfHlxtX1DJBZQXs1DF", {
+              //   "imageData": FieldValue.arrayUnion([
+              //     {"imageData.0.isShow": val}
+              //   ])
+              // });
+              status = val;
+              print(_);
               // status = val;
-            },
-          ),
-          SizedBox(
-            width: 3.w,
-          ),
-          Text(
-            "Q00001 - Helena -dieet",
+              // _.update("isShow", (value) {
+              //   value = val;
+              //   return value;
+              // });
+
+              firestore_update("admin", "${_.id}", {"isShow": val});
+              // firestore_set("admin", "repfHlxtX1DJBZQXs1DF", {
+              //   "imageData": {"isShow": false}
+              // });
+            });
+            // status = val;
+          },
+        ),
+        SizedBox(
+          width: 3.w,
+        ),
+        Expanded(
+          child: Text(
+            "Q00$index - ${_["title"]}",
             style: TextStyle(
                 fontSize: 11.sp,
                 color: Colors.black,
                 fontWeight: FontWeight.w600),
-          )
-        ]),
-      ),
+          ),
+        )
+      ]),
     );
   }
   // Row uplaodimage(nameOfImage, VoidCallback) {
